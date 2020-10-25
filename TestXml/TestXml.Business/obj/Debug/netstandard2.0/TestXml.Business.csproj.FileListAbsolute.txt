@@ -1,0 +1,14 @@
+C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\TestXml.Abstract.dll
+C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\TestXml.Data.dll
+C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\TestXml.Abstract.pdb
+C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.csprojAssemblyReference.cache
+C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.AssemblyInfoInputs.cache
+C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.AssemblyInfo.cs
+C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\TestXml.Business.deps.json
+C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\TestXml.Business.dll
+C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\TestXml.Business.pdb
+C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\TestXml.Data.pdb
+C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.csproj.CoreCompileInputs.cache
+C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.csproj.CopyComplete
+C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.dll
+C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.pdb
