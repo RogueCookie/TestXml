@@ -10,3 +10,4 @@ C:\Projects\Training\Test\TestXml\TestXml.Data\obj\Debug\netstandard2.0\TestXml.
 C:\Projects\Training\Test\TestXml\TestXml.Data\obj\Debug\netstandard2.0\TestXml.Data.dll
 C:\Projects\Training\Test\TestXml\TestXml.Data\obj\Debug\netstandard2.0\TestXml.Data.pdb
 C:\Projects\Training\Test\TestXml\TestXml.Data\obj\Debug\netstandard2.0\TestXml.Data.csproj.CoreCompileInputs.cache
+C:\Projects\Training\Test\TestXml\TestXml.Data\bin\Debug\netstandard2.0\TestXml.Abstract.xml

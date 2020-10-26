@@ -24,6 +24,8 @@ namespace TestXml.Api.Controllers
         /// <param name="model">Information about new user</param>
         /// <returns></returns>
         [HttpPost("CreateUser")]
+        [Produces("application/xml")]
+        [Consumes("application/xml")]
         public async Task<ActionResult<UserResponseModel>> CreateUser(UserRequestModel model)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
@@ -39,6 +41,8 @@ namespace TestXml.Api.Controllers
         /// </summary>
         /// <returns>Message weather or not user was deleted in Json format</returns>
         [HttpPost("RemoveUser")]
+        [Produces("application/json")]
+        [Consumes("application/json")]
         public Task<ActionResult<JsonObject>> RemoveUser()
         {
             throw new NotImplementedException();
@@ -49,7 +53,7 @@ namespace TestXml.Api.Controllers
         /// </summary>
         /// <returns>Message weather or not user was deleted in Json format</returns>
         [HttpPost("SetStatus")]
-        public async Task<ActionResult<JsonObject>> SetStatus([FromBody]int id, [FromBody] string newStatus) //TODo JsonObject from response
+        public async Task<ActionResult<JsonObject>> SetStatus(int id,  string newStatus) //TODo JsonObject from response
         {
             throw new NotImplementedException();
         }

@@ -7,3 +7,4 @@ C:\Projects\Training\Test\TestXml\TestXml.Abstract\obj\Debug\netstandard2.0\Test
 C:\Projects\Training\Test\TestXml\TestXml.Abstract\obj\Debug\netstandard2.0\TestXml.Abstract.csproj.CoreCompileInputs.cache
 C:\Projects\Training\Test\TestXml\TestXml.Abstract\obj\Debug\netstandard2.0\TestXml.Abstract.dll
 C:\Projects\Training\Test\TestXml\TestXml.Abstract\obj\Debug\netstandard2.0\TestXml.Abstract.pdb
+C:\Projects\Training\Test\TestXml\TestXml.Abstract\bin\Debug\netstandard2.0\TestXml.Abstract.xml

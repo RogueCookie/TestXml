@@ -3,6 +3,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using TestXml.Abstract;
@@ -37,6 +38,7 @@ namespace TestXml.Api.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpGet("CreateUser")] //TODO user info need to replace
+        [ProducesResponseType(typeof(UserResponseModel), (int)HttpStatusCode.OK)]// TODO list
         public async Task<ActionResult<UserResponseModel>> CreateUser(UserRequestModel model) //TODO
         {
             if (model == null) throw new ArgumentNullException(nameof(model));

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TestXml.Api</name>
+    </assembly>
+    <members>
+        <member name="M:TestXml.Api.Controllers.UserAuthController.CreateUser(TestXml.Api.Models.Request.UserRequestModel)">
+            <summary>
+            Create new user
+            </summary>
+            <param name="model">Information about new user</param>
+            <returns></returns>
+        </member>
+        <member name="M:TestXml.Api.Controllers.UserAuthController.RemoveUser">
+            <summary>
+            Remove particular user
+            </summary>
+            <returns>Message weather or not user was deleted in Json format</returns>
+        </member>
+        <member name="M:TestXml.Api.Controllers.UserAuthController.SetStatus(System.Int32,System.String)">
+            <summary>
+            Change status of user
+            </summary>
+            <returns>Message weather or not user was deleted in Json format</returns>
+        </member>
+        <member name="M:TestXml.Api.Controllers.UserController.CreateUser(TestXml.Api.Models.Request.UserRequestModel)">
+            <summary>
+            Return information about user as html page
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TestXml.Api.Extension.SwaggerExtension">
+            <summary>
+            Swagger set up. Implementation of Swagger settings
+            </summary>
+        </member>
+        <member name="T:TestXml.Api.Extension.SwaggerUiExtension">
+            <summary>
+            Add swagger in middleware
+            </summary>
+        </member>
+        <member name="M:TestXml.Api.Extension.SwaggerUiExtension.RegisterSwaggerUi(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Register swagger UI and Handler for exceptions for it
+            </summary>
+        </member>
+        <member name="P:TestXml.Api.Models.Request.UserRequestModel.UserId">
+            <summary>
+            User Id
+            </summary>
+        </member>
+        <member name="P:TestXml.Api.Models.Request.UserRequestModel.UserName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:TestXml.Api.Models.Request.UserRequestModel.UserStatus">
+            <summary>
+            Hold current user status
+            </summary>
+        </member>
+        <member name="P:TestXml.Api.Models.Response.UserResponseModel.UserId">
+            <summary>
+            User Id
+            </summary>
+        </member>
+        <member name="P:TestXml.Api.Models.Response.UserResponseModel.UserName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:TestXml.Api.Models.Response.UserResponseModel.UserStatus">
+            <summary>
+            Hold current user status
+            </summary>
+        </member>
+    </members>
+</doc>

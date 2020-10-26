@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using TestXml.Abstract;
 using TestXml.Abstract.Models.Options;
+using TestXml.Api.Extension;
 using TestXml.Business;
 using TestXml.Data;
 
@@ -39,13 +40,15 @@ namespace TestXml.Api
             
             
             //local cash ()could be change in redis without additional modification in controller
-            services.AddDistributedMemoryCache(options => options.ExpirationScanFrequency = TimeSpan.FromMinutes(3)); 
-
+            services.AddDistributedMemoryCache(options => options.ExpirationScanFrequency = TimeSpan.FromMinutes(3));
+            services.RegisterSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.RegisterSwaggerUi();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -60,6 +63,9 @@ namespace TestXml.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "defaultArea",
+                    pattern: "{area:exists}/{controller}/{action}");
             });
         }
 

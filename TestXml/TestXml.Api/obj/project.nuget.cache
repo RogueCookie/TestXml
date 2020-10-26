@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "vXY6Xf1n1FoWPC9hm/BTVNWgdodsoHecaUIjrcWEQ1DnskoSFkgR+YnPT2GdmiMc+wwUBVtiRJPdoevjDSx2Ww==",
+  "dgSpecHash": "hiQzb9O/rYh6wpW7GRsy/0ot7ycy2RZwGpqlKuTRNVUMS+a6DO+Wlvv+o1nSvL96IzDP10cMpfCe+DWXODViWA==",
   "success": true,
   "projectFilePath": "C:\\Projects\\Training\\Test\\TestXml\\TestXml.Api\\TestXml.Api.csproj",
   "expectedPackageFiles": [
@@ -23,10 +23,14 @@
     "C:\\Users\\RUVAVAG\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.9\\microsoft.extensions.logging.abstractions.3.1.9.nupkg.sha512",
     "C:\\Users\\RUVAVAG\\.nuget\\packages\\microsoft.extensions.options\\3.1.9\\microsoft.extensions.options.3.1.9.nupkg.sha512",
     "C:\\Users\\RUVAVAG\\.nuget\\packages\\microsoft.extensions.primitives\\3.1.9\\microsoft.extensions.primitives.3.1.9.nupkg.sha512",
+    "C:\\Users\\RUVAVAG\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\RUVAVAG\\.nuget\\packages\\mysqlconnector\\0.69.9\\mysqlconnector.0.69.9.nupkg.sha512",
     "C:\\Users\\RUVAVAG\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
     "C:\\Users\\RUVAVAG\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\3.2.3\\pomelo.entityframeworkcore.mysql.3.2.3.nupkg.sha512",
     "C:\\Users\\RUVAVAG\\.nuget\\packages\\pomelo.jsonobject\\2.2.1\\pomelo.jsonobject.2.2.1.nupkg.sha512",
+    "C:\\Users\\RUVAVAG\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\RUVAVAG\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\RUVAVAG\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512",
     "C:\\Users\\RUVAVAG\\.nuget\\packages\\system.collections.immutable\\1.7.1\\system.collections.immutable.1.7.1.nupkg.sha512",
     "C:\\Users\\RUVAVAG\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512",
     "C:\\Users\\RUVAVAG\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.1\\system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512"
