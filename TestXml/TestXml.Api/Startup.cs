@@ -1,17 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using TestXml.Abstract;
 using TestXml.Abstract.Models.Options;
 using TestXml.Business;
@@ -31,16 +26,20 @@ namespace TestXml.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
-            services.AddDbContext<TestXmlDbContext>(o 
+
+            services.AddDbContext<TestXmlDbContext>(o
                 => o.UseMySql("server=localhost;user id=root;database=test_xml; user=root; password=apollinier13"));
-               // => o.UseMySql(Configuration.GetConnectionString("DataBaseConnectionString")));
+            // => o.UseMySql(Configuration.GetConnectionString("DataBaseConnectionString")));
             services.AddScoped<IUserInfoService, UserInfoService>();
             services.AddScoped<TestXmlDbContext>();
             services.AddControllers();
-            //AddConfiguration(services);
-            AddServiceOptions<AppOptions>(services, "TestXml");
             
+            //AddConfiguration(services);
+            AddServiceOptions<AppOptions>(services, "TestXmlOptions");
+            
+            
+            //local cash ()could be change in redis without additional modification in controller
+            services.AddDistributedMemoryCache(options => options.ExpirationScanFrequency = TimeSpan.FromMinutes(3)); 
 
         }
 
