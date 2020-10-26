@@ -4,19 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
 using TestXml.Abstract.Enums;
 using TestXml.Abstract.Models.Options;
 using TestXml.Data.Entities;
 
 namespace TestXml.Data
 {
-    public class TestXmlDbContext : DbContext
+    public class TestXmlDbContext :  DbContext/*, IDataAccess*/
     {
+        private readonly MySqlConnection _connection;
+
         public DbSet<UserInfoEntity> Users { get; set; }
 
-        public TestXmlDbContext(DbContextOptions<TestXmlDbContext> options)
+        public TestXmlDbContext(DbContextOptions<TestXmlDbContext> options/*, AppOptions appOptions*/) //TODO
             : base(options)
         {
+            ///_connection =new MySqlConnection(appOptions.DataBaseConnectionString);
             LoadDefaultUsers();
         }
 

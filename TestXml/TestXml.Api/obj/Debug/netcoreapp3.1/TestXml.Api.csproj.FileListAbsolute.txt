@@ -45,5 +45,6 @@ C:\Projects\Training\Test\TestXml\TestXml.Api\bin\Debug\netcoreapp3.1\MySqlConne
 C:\Projects\Training\Test\TestXml\TestXml.Api\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Projects\Training\Test\TestXml\TestXml.Api\bin\Debug\netcoreapp3.1\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Projects\Training\Test\TestXml\TestXml.Api\bin\Debug\netcoreapp3.1\Pomelo.JsonObject.dll
+C:\Projects\Training\Test\TestXml\TestXml.Api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 C:\Projects\Training\Test\TestXml\TestXml.Api\obj\Debug\netcoreapp3.1\TestXml.Api.csproj.CoreCompileInputs.cache
 C:\Projects\Training\Test\TestXml\TestXml.Api\obj\Debug\netcoreapp3.1\TestXml.Api.MvcApplicationPartsAssemblyInfo.cache

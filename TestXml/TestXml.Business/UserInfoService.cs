@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestXml.Abstract;
 using TestXml.Abstract.Enums;
 using TestXml.Abstract.Models;
+using TestXml.Abstract.Models.Options;
 using TestXml.Data;
 using TestXml.Data.Entities;
 
@@ -15,16 +17,14 @@ namespace TestXml.Business
         private readonly TestXmlDbContext _dbContext;
 
         private readonly IMemoryCache _memoryCache;
-        //private readonly AppOptions _options;
+        private readonly AppOptions _options;
 
-        public UserInfoService(/*AppOptions options,*/ TestXmlDbContext dbContext/*, IMemoryCache memoryCache*/)
+        public UserInfoService(AppOptions options, TestXmlDbContext dbContext/*, IMemoryCache memoryCache*/)
         {
             _dbContext = dbContext;
             //_memoryCache = memoryCache;
-            // _options = options ?? throw new ArgumentNullException(nameof(options));
+             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
-
-
 
 
         public void Initialize()
@@ -58,7 +58,7 @@ namespace TestXml.Business
             };
         }
 
-        public Task<UserInfo> CreateUser(int userId, string userName, string status)
+        public Task<UserInfo> CreateUser(int userId, string userName, UserStatus status)
         {
             throw new System.NotImplementedException();
         }
