@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using TestXml.Abstract;
 using TestXml.Abstract.Models;
 using TestXml.Api.Models.Request;
@@ -9,7 +9,7 @@ using TestXml.Api.Models.Response;
 
 namespace TestXml.Api.Controllers
 {
-    [Route("api/Auth/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class UserAuthController : ControllerBase
@@ -38,29 +38,32 @@ namespace TestXml.Api.Controllers
         /// </summary>
         /// <param name="model">Information about new user</param>
         /// <returns></returns>
-        [HttpPost("CreateUser")]
+       //[HttpPost("createuser.{format}"), FormatFilter]
+        [HttpPost("createuser.{format}"), FormatFilter]
         [Produces("application/xml")]
         [Consumes("application/xml")]
         public async Task<ActionResult<UserResponseModel>> CreateUser([FromBody]UserRequestModel model)
         {
-            if (model == null) throw new ArgumentNullException(nameof(model));
+            //if (model == null) throw new ArgumentNullException(nameof(model));
 
-            var result = await _infoService.CreateUser(model.UserId, model.UserName, model.UserStatus); //TODO XML
-            if (result == null) NotFound();
+            //var result = await _infoService.CreateUser(model.UserId, model.UserName, model.UserStatus); //TODO XML
+            //if (result == null) NotFound();
 
-            return Ok(result);
+            //return Ok(result);
+            return Ok("Hello");
         }
 
         /// <summary>
         /// Remove particular user
         /// </summary>
         /// <returns>Message weather or not user was deleted in Json format</returns>
-        [HttpPost("RemoveUser")]
+        [HttpPost("removeuser.{format}"), FormatFilter]
         [Produces("application/json")]
         [Consumes("application/json")]
-        public Task<ActionResult<UserResponseModel>> RemoveUser()
+        public async Task<ActionResult<UserResponseModel>> RemoveUser([FromBody] UserRequestModel model)
         {
-            throw new NotImplementedException();
+            return Ok("Hello");
+            //throw new NotImplementedException();
         }
 
         /// <summary>
