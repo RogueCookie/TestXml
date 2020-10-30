@@ -8,6 +8,9 @@ namespace TestXml.Abstract
     public interface IUserInfoService
     {
         Task<UserInfo> CreateUser(int userId, string userName, UserStatus status);
-        List<UserInfo> GetUsers();
+
+        Task<List<UserInfo>> GetUsers();
+
+        Task<UserInfo> Authenticate(string username, string password);
     }
 }

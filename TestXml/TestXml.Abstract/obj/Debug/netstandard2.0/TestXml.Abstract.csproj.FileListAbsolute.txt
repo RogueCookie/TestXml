@@ -4,6 +4,7 @@ C:\Projects\Training\Test\TestXml\TestXml.Abstract\bin\Debug\netstandard2.0\Test
 C:\Projects\Training\Test\TestXml\TestXml.Abstract\obj\Debug\netstandard2.0\TestXml.Abstract.csprojAssemblyReference.cache
 C:\Projects\Training\Test\TestXml\TestXml.Abstract\obj\Debug\netstandard2.0\TestXml.Abstract.AssemblyInfoInputs.cache
 C:\Projects\Training\Test\TestXml\TestXml.Abstract\obj\Debug\netstandard2.0\TestXml.Abstract.AssemblyInfo.cs
-C:\Projects\Training\Test\TestXml\TestXml.Abstract\obj\Debug\netstandard2.0\TestXml.Abstract.csproj.CoreCompileInputs.cache
 C:\Projects\Training\Test\TestXml\TestXml.Abstract\obj\Debug\netstandard2.0\TestXml.Abstract.dll
 C:\Projects\Training\Test\TestXml\TestXml.Abstract\obj\Debug\netstandard2.0\TestXml.Abstract.pdb
+C:\Projects\Training\Test\TestXml\TestXml.Abstract\bin\Debug\netstandard2.0\TestXml.Abstract.xml
+C:\Projects\Training\Test\TestXml\TestXml.Abstract\obj\Debug\netstandard2.0\TestXml.Abstract.csproj.CoreCompileInputs.cache

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TestXml.Abstract</name>
+    </assembly>
+    <members>
+        <member name="T:TestXml.Abstract.Models.Options.AppOptions">
+            <summary>
+            TestXml configuration
+            </summary>
+        </member>
+        <member name="P:TestXml.Abstract.Models.Options.AppOptions.DataBaseConnectionString">
+            <summary>
+            Database connection string
+            </summary>
+        </member>
+        <member name="P:TestXml.Abstract.Models.Options.AppOptions.CachedHitLifeTime">
+            <summary>
+            How many milliseconds we will hold cash
+            </summary>
+        </member>
+        <member name="P:TestXml.Abstract.Models.UserInfo.UserId">
+            <summary>
+            User Id
+            </summary>
+        </member>
+        <member name="P:TestXml.Abstract.Models.UserInfo.UserName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:TestXml.Abstract.Models.UserInfo.UserStatus">
+            <summary>
+            Hold current user status
+            </summary>
+        </member>
+    </members>
+</doc>
