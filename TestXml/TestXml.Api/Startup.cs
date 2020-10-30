@@ -27,7 +27,7 @@ namespace TestXml.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddXmlDataContractSerializerFormatters();
+            //services.AddControllers().AddXmlDataContractSerializerFormatters();
 
             services.AddDbContext<TestXmlDbContext>(o
                 => o.UseMySql("server=localhost;user id=root;database=test_xml; user=root; password=apollinier13"));
@@ -46,11 +46,11 @@ namespace TestXml.Api
             // configure basic authentication 
             services.AddAuthentication("BasicAuthentication")
                 .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
-            ////services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //    .AddCookie();
-            services.AddMvc()
-                .AddXmlSerializerFormatters()
-                .AddXmlDataContractSerializerFormatters();
+            
+
+            //services.AddMvc()
+            //    .AddXmlSerializerFormatters()
+            //    .AddXmlDataContractSerializerFormatters();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
