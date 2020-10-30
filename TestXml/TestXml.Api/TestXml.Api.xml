@@ -11,7 +11,7 @@
             <param name="model">Information about new user</param>
             <returns></returns>
         </member>
-        <member name="M:TestXml.Api.Controllers.UserAuthController.RemoveUser">
+        <member name="M:TestXml.Api.Controllers.UserAuthController.RemoveUser(TestXml.Api.Models.Request.UserRequestModel)">
             <summary>
             Remove particular user
             </summary>

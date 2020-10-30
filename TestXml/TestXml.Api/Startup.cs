@@ -27,6 +27,7 @@ namespace TestXml.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers().AddXmlDataContractSerializerFormatters();
 
             services.AddDbContext<TestXmlDbContext>(o
                 => o.UseMySql("server=localhost;user id=root;database=test_xml; user=root; password=apollinier13"));

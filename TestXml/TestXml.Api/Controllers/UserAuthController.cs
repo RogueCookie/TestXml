@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using TestXml.Abstract;
 using TestXml.Abstract.Models;
 using TestXml.Api.Models.Request;
@@ -38,7 +38,7 @@ namespace TestXml.Api.Controllers
         /// </summary>
         /// <param name="model">Information about new user</param>
         /// <returns></returns>
-        [HttpPost("CreateUser")]
+        [HttpPost("post.{format}"), FormatFilter]
         [Produces("application/xml")]
         [Consumes("application/xml")]
         public async Task<ActionResult<UserResponseModel>> CreateUser([FromBody]UserRequestModel model)
@@ -55,10 +55,10 @@ namespace TestXml.Api.Controllers
         /// Remove particular user
         /// </summary>
         /// <returns>Message weather or not user was deleted in Json format</returns>
-        [HttpPost("RemoveUser")]
+        [HttpPost("post.{format}"), FormatFilter]
         [Produces("application/json")]
         [Consumes("application/json")]
-        public Task<ActionResult<UserResponseModel>> RemoveUser()
+        public Task<ActionResult<UserResponseModel>> RemoveUser([FromBody] UserRequestModel model)
         {
             throw new NotImplementedException();
         }
