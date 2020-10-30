@@ -61,6 +61,9 @@ namespace TestXml.Business
         /// <inheritdoc />
         public async Task<UserInfo> Authenticate(string username, string password)
         {
+            if (string.IsNullOrEmpty(username)) throw new ArgumentNullException(nameof(username));
+            if (string.IsNullOrEmpty(password)) throw new ArgumentNullException(nameof(password));
+
             var user = await Task.Run(() => _users.SingleOrDefault(x => x.UserName == username && x.Password == password));
 
             if (user == null) return null; //TODO handle error
