@@ -55,3 +55,4 @@ C:\Projects\Training\Test\TestXml\TestXml.Api\bin\Debug\netcoreapp3.1\TestXml.Ab
 C:\Projects\Training\Test\TestXml\TestXml.Api\obj\Debug\netcoreapp3.1\TestXml.Api.csproj.CoreCompileInputs.cache
 C:\Projects\Training\Test\TestXml\TestXml.Api\obj\Debug\netcoreapp3.1\TestXml.Api.MvcApplicationPartsAssemblyInfo.cs
 C:\Projects\Training\Test\TestXml\TestXml.Api\obj\Debug\netcoreapp3.1\TestXml.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\Projects\Training\Test\TestXml\TestXml.Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Metadata.dll

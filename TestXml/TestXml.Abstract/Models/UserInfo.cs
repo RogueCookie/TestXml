@@ -1,19 +1,9 @@
-﻿using System;
-using TestXml.Abstract.Enums;
+﻿using TestXml.Abstract.Enums;
 
 namespace TestXml.Abstract.Models
 {
     public class UserInfo
     {
-        public UserInfo(int userId, string userName, UserStatus userStatus)
-        {
-            UserId = userId;
-           
-            if(string.IsNullOrEmpty(userName)) throw new ArgumentNullException(nameof(userName));
-            UserName = userName;
-
-            UserStatus = userStatus;
-        }
         /// <summary>
         /// User Id
         /// </summary>
@@ -28,5 +18,8 @@ namespace TestXml.Abstract.Models
         /// Hold current user status
         /// </summary>
         public UserStatus UserStatus { get; set; }
+
+#nullable enable
+        public string? Password { get; set; }
     }
 }

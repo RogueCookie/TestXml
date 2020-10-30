@@ -23,7 +23,7 @@
             </summary>
             <returns>Message weather or not user was deleted in Json format</returns>
         </member>
-        <member name="M:TestXml.Api.Controllers.UserController.CreateUser(TestXml.Api.Models.Request.UserRequestModel)">
+        <member name="M:TestXml.Api.Controllers.UserController.GetUsers(TestXml.Api.Models.Request.UserRequestModel)">
             <summary>
             Return information about user as html page
             </summary>

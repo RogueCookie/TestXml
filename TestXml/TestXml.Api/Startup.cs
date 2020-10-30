@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,6 @@ using TestXml.Abstract.Models.Options;
 using TestXml.Api.Extension;
 using TestXml.Business;
 using TestXml.Data;
-
 namespace TestXml.Api
 {
     public class Startup
@@ -37,11 +37,19 @@ namespace TestXml.Api
             
             //AddConfiguration(services);
             AddServiceOptions<AppOptions>(services, "TestXmlOptions");
-            
-            
+
             //local cash ()could be change in redis without additional modification in controller
             services.AddDistributedMemoryCache(options => options.ExpirationScanFrequency = TimeSpan.FromMinutes(3));
             services.RegisterSwagger();
+
+            // configure basic authentication 
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+            ////services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //    .AddCookie();
+            services.AddMvc()
+                .AddXmlSerializerFormatters()
+                .AddXmlDataContractSerializerFormatters();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +65,7 @@ namespace TestXml.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

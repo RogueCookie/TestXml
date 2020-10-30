@@ -8,8 +8,8 @@ C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\Test
 C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\TestXml.Business.dll
 C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\TestXml.Business.pdb
 C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\TestXml.Data.pdb
-C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.csproj.CoreCompileInputs.cache
 C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.csproj.CopyComplete
 C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.dll
 C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.pdb
 C:\Projects\Training\Test\TestXml\TestXml.Business\bin\Debug\netstandard2.0\TestXml.Abstract.xml
+C:\Projects\Training\Test\TestXml\TestXml.Business\obj\Debug\netstandard2.0\TestXml.Business.csproj.CoreCompileInputs.cache
