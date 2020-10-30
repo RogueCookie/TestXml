@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using TestXml.Abstract;
+using TestXml.Abstract.Models;
 using TestXml.Api.Models.Request;
 using TestXml.Api.Models.Response;
 
@@ -9,6 +11,7 @@ namespace TestXml.Api.Controllers
 {
     [Route("api/Auth/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserAuthController : ControllerBase
     {
         private readonly IUserInfoService _infoService;
@@ -18,13 +21,27 @@ namespace TestXml.Api.Controllers
             _infoService = infoService ?? throw new ArgumentNullException(nameof(infoService));
         }
 
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateModel model)
+        {
+            var user = await _infoService.Authenticate(model.Username, model.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(user);
+        }
+
         /// <summary>
         /// Create new user
         /// </summary>
         /// <param name="model">Information about new user</param>
         /// <returns></returns>
         [HttpPost("CreateUser")]
-        public async Task<ActionResult<UserResponseModel>> CreateUser(UserRequestModel model)
+        [Produces("application/xml")]
+        [Consumes("application/xml")]
+        public async Task<ActionResult<UserResponseModel>> CreateUser([FromBody]UserRequestModel model)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
 
@@ -39,7 +56,9 @@ namespace TestXml.Api.Controllers
         /// </summary>
         /// <returns>Message weather or not user was deleted in Json format</returns>
         [HttpPost("RemoveUser")]
-        public Task<ActionResult<JsonObject>> RemoveUser()
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        public Task<ActionResult<UserResponseModel>> RemoveUser()
         {
             throw new NotImplementedException();
         }
@@ -49,10 +68,9 @@ namespace TestXml.Api.Controllers
         /// </summary>
         /// <returns>Message weather or not user was deleted in Json format</returns>
         [HttpPost("SetStatus")]
-        public async Task<ActionResult<JsonObject>> SetStatus([FromBody]int id, [FromBody] string newStatus) //TODo JsonObject from response
+        public async Task<ActionResult<UserResponseModel>> SetStatus(int id,  string newStatus) //TODo JsonObject from response
         {
             throw new NotImplementedException();
         }
-
     }
 }
