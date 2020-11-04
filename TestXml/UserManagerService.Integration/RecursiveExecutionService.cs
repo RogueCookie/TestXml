@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,7 @@ namespace UserManagerService.Integration
     {
         private readonly ILogger<RecursiveExecutionService> _logger;
         private readonly ServiceOption _serviceOption;
+        private const string apiUrl = "https://localhost:44364/api/public/user";
 
         public RecursiveExecutionService(ILogger<RecursiveExecutionService> logger, ServiceOption serviceOption)
         {
@@ -48,8 +50,19 @@ namespace UserManagerService.Integration
         /// </summary>
         private async Task UpdateDataAsync(CancellationToken cancellationToken)
         {
-            //TODO 
-            _logger.LogDebug($"Update executed at {DateTime.Now}");
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(apiUrl + "/GetUsers");
+            request.Method = "GET";
+            try
+            {
+                var response = (HttpWebResponse)request.GetResponse();
+                _logger.LogDebug($"Update executed at {DateTime.Now}");
+            }
+            catch (Exception exception)
+            {
+                _logger.LogDebug($"Update executed failed at {DateTime.Now}, {exception}");
+                throw;
+            }
+           
         }
     }
 }
