@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using TestXml.Abstract.Enums;
 using TestXml.Abstract.Models;
+using TestXml.Abstract.Models.Exceptions;
 using TestXml.Business;
 using TestXml.Data;
 using TestXml.Data.Entities;
@@ -40,10 +41,14 @@ namespace TestXml.Tests.Unit.Business
 
             // Assert
             Assert.True(result.Count == 3);
+            foreach (var user in result)
+            {
+                Assert.True(user.UserStatus != UserStatus.Deleted);
+            }
         }
 
         [Fact]
-        public async Task CreateUSer_WhenDone_AddedUserExpected()
+        public async Task CreateUser_WhenDone_AddedUserExpected()
         {
             // Arrange
             var initUser = InitUserEntity();
@@ -55,10 +60,12 @@ namespace TestXml.Tests.Unit.Business
 
             // Assert
             Assert.NotNull(result);
+            Assert.Equal(initUser.UserName, result.UserName);
+            Assert.Equal(initUser.UserStatus, result.UserStatus);
         }
 
         [Fact]
-        public async Task CreateUser_WhenIdAlreadyExist_NullExpected()
+        public async Task CreateUser_WhenIdAlreadyExist_CustomExceptionExpected()
         {
             // Arrange
             var initUser = InitUserEntity();
@@ -68,23 +75,23 @@ namespace TestXml.Tests.Unit.Business
             var adaptModel = AdaptToModel(model);
 
             // Act
-            var result = await _userService.CreateUser(adaptModel);
+            async Task ActAsync() => await _userService.CreateUser(adaptModel);
 
             // Assert
-            Assert.Null(result);
+            await Assert.ThrowsAsync<XmlExceptionError1>(ActAsync);
         }
 
         [Fact]
-        public async Task RemoveUser_WhenIdNotExist_NullExpected()
+        public async Task RemoveUser_WhenIdNotExist_CustomExceptionExpected()
         {
             // Arrange
             var id = 5;
 
             // Act
-            var result = await _userService.RemoveUser(id);
+            async Task ActAsync() => await _userService.RemoveUser(id);
 
             // Assert
-            Assert.Null(result);
+            await Assert.ThrowsAsync<XmlExceptionError2>(ActAsync);
         }
 
         [Fact]
@@ -93,14 +100,16 @@ namespace TestXml.Tests.Unit.Business
             // Arrange
             var initUser = InitUserEntity();
             await _context.Users.AddAsync(initUser);
-            var id = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             // Act
-            var result = await _userService.RemoveUser(id);
-            var userInDb = await _context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+            var result = await _userService.RemoveUser(initUser.UserId);
+            var userInDb = await _context.Users.FirstOrDefaultAsync(x => x.UserId == initUser.UserId);
 
             // Assert
             Assert.NotNull(result);
+            Assert.Equal(initUser.UserName, userInDb.UserName);
+            Assert.True(userInDb.UserStatus == UserStatus.Deleted);
         }
 
         [Fact]
@@ -109,34 +118,43 @@ namespace TestXml.Tests.Unit.Business
             // Arrange
             var initUser = InitUserEntity();
             await _context.Users.AddAsync(initUser);
-            var id = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             // Act
-            var result = await _userService.SetStatus(id, UserStatus.Blocked.ToString());
-            var userInDb = await _context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+            var result = await _userService.SetStatus(initUser.UserId, UserStatus.Blocked.ToString());
+            var userInDb = await _context.Users.FirstOrDefaultAsync(x => x.UserId == initUser.UserId);
 
             // Assert
             Assert.NotNull(result);
+            Assert.Equal(initUser.UserName, userInDb.UserName);
             Assert.True(userInDb.UserStatus == UserStatus.Blocked);
         }
 
         [Fact]
-        public async Task SetStatus_WhenNewStatusNotFromEnum_UserExpected()
+        public async Task SetStatus_WhenNewStatusNotFromEnum_CustomExceptionExpected()
         {
             // Arrange
             var initUser = InitUserEntity();
             await _context.Users.AddAsync(initUser);
-            var id = await _context.SaveChangesAsync();
-            var userBefore = await _context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+            await _context.SaveChangesAsync();
 
             // Act
-            var result = await _userService.SetStatus(id, "Unknown");
-            var userInDb = await _context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+            async Task ActAsync() => await _userService.SetStatus(initUser.UserId, "Unknown"); ;
 
             // Assert
-            Assert.Null(result);
-            Assert.NotNull(userBefore);
-            Assert.Equal(userBefore.UserStatus, userInDb.UserStatus);
+            await Assert.ThrowsAsync<XmlExceptionError1>(ActAsync);
+        }
+
+        [Fact]
+        public async Task SetStatus_WhenUserNotExist_CustomExceptionExpectedExpected()
+        {
+            // Arrange
+
+            // Act
+            async Task ActAsync() => await _userService.SetStatus(10000, "Unknown"); ;
+
+            // Assert
+            await Assert.ThrowsAsync<XmlExceptionError2>(ActAsync);
         }
 
         private UserInfoEntity InitUserEntity()

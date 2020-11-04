@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TestXml.Abstract;
 using TestXml.Abstract.Enums;
 using TestXml.Abstract.Models;
+using TestXml.Abstract.Models.Exceptions;
 using TestXml.Data;
 using TestXml.Data.Entities;
 using TestXml.Data.Extension;
@@ -40,7 +41,7 @@ namespace TestXml.Business
             if (model == null) throw new ArgumentNullException(nameof(model));
 
             var existUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserId == model.UserId);
-            if (existUser != null) return null; //TODO error model
+            if (existUser != null) throw new XmlExceptionError1($"User with id {model.UserId} already exist");
 
             var modelForAdd = model.AdaptUserToEntity();
             await _dbContext.Users.AddAsync(modelForAdd);
@@ -59,7 +60,7 @@ namespace TestXml.Business
 
             var user = await Task.Run(() => _users.SingleOrDefault(x => x.UserName == username && x.Password == password));
 
-            if (user == null) return null; //TODO handle error
+            if (user == null) return null; 
 
             // authentication successful so return user details without password
             return user.WithoutPassword();
@@ -69,7 +70,7 @@ namespace TestXml.Business
         public async Task<UserInfo> RemoveUser(int userId)
         {
             var existUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserId == userId);
-            if (existUser == null) return null;
+            if (existUser == null) throw new XmlExceptionError2($"User not found");
 
             existUser.UserStatus = UserStatus.Deleted;
 
@@ -86,11 +87,11 @@ namespace TestXml.Business
             if (status == null) throw new ArgumentNullException(nameof(status));
 
             var existUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserId == userId);
-            if (existUser == null) return null; //TODO
+            if (existUser == null) throw new  XmlExceptionError2($"User with  id {userId} does not exist");
             var currentStatus = existUser.UserStatus.ToString();
 
             var newStatusIsEnum = Enum.IsDefined(typeof(UserStatus), status);
-            if (!newStatusIsEnum) return null;
+            if (!newStatusIsEnum) throw new XmlExceptionError1($"New status {status} is not between available"); ;
 
             if (currentStatus == status) return existUser?.AdaptEntityToUserInfoModel();
 
