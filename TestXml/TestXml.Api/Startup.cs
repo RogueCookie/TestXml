@@ -11,6 +11,7 @@ using System.IO;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Razor;
 using TestXml.Abstract;
 using TestXml.Abstract.Models.Options;
 using TestXml.Api.Extension;
@@ -33,7 +34,7 @@ namespace TestXml.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddXmlDataContractSerializerFormatters();
-
+            
             services.AddDbContext<TestXmlDbContext>(o
                 => o.UseMySql("server=localhost;user id=root;database=test_xml; user=root; password=apollinier13"));
             // => o.UseMySql(Configuration.GetConnectionString("DataBaseConnectionString")));
@@ -55,6 +56,7 @@ namespace TestXml.Api
             
             AddServiceOptions<AppOptions>(services, "TestXmlOptions");
 
+          
             //services.AddMvc()
             //    .AddXmlSerializerFormatters()
             //    .AddXmlDataContractSerializerFormatters();
@@ -81,7 +83,7 @@ namespace TestXml.Api
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "defaultArea",
-                    pattern: "{area:exists}/{controller}/{action}");
+                    pattern: "{area:exists}/{controller=Public}/{action=GetUsers}");
             });
 
             app.UseExceptionHandler(errorApp =>

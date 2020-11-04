@@ -3,6 +3,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,19 +14,20 @@ using TestXml.Abstract.Models.Options;
 using TestXml.Api.Extension;
 using TestXml.Api.Models.Request;
 using TestXml.Api.Models.Response;
+using TestXml.Data.Extension;
 
 namespace TestXml.Api.Controllers
 {
     [ApiController]
     [AllowAnonymous]
-    [Route("api/Public/[controller]")]
-    public class UserController : Controller
+    [Route("[controller]")]
+    public class PublicController : Controller
     {
         private readonly IUserInfoService _infoService;
         private readonly IDistributedCache _cache;
         private readonly int _cachedHitLifeTime;
 
-        public UserController(IUserInfoService infoService, IDistributedCache cache, AppOptions options)
+        public PublicController(IUserInfoService infoService, IDistributedCache cache, AppOptions options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
             _infoService = infoService ?? throw new ArgumentNullException(nameof(infoService));
@@ -36,13 +38,11 @@ namespace TestXml.Api.Controllers
         /// <summary>
         /// Return information about user as html page
         /// </summary>
-        /// <param name="model"></param>
         /// <returns></returns>
-        [HttpGet("GetUsers")] //TODO user info need to replace
-        [ProducesResponseType(typeof(UserInfo), (int)HttpStatusCode.OK)]// TODO list
-        public async Task<ActionResult<UserInfo>> GetUsers() 
+        [HttpGet("GetUsers")] 
+        [ProducesResponseType(typeof(List<UserResponseModel>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<List<UserResponseModel>>> GetUsers() 
         {
-
             // key by which asking cash
             var jsonKey = "allUsers"; 
             
@@ -55,15 +55,15 @@ namespace TestXml.Api.Controllers
                 if (cachedResultByte != null)
                 {
                     var cachedResultJson = Encoding.UTF8.GetString(cachedResultByte);
-                    var cachedResult = JsonConvert.DeserializeObject<List<UserInfo>>(cachedResultJson);
+                    var cachedResult = JsonConvert.DeserializeObject<List<UserResponseModel>>(cachedResultJson);
                     return Ok(cachedResult);
                 }
             }
             
             var result = await _infoService.GetUsers();
-            if (result == null) NotFound();
+            var adaptResponseModel = result.Select(x => x.AdaptModelToResponse());
 
-            var responseJson = JsonConvert.SerializeObject(result);
+            var responseJson = JsonConvert.SerializeObject(adaptResponseModel);
             var responseBytes = Encoding.UTF8.GetBytes(responseJson);
 
             // assign how long we will be leave this cash 
@@ -71,7 +71,7 @@ namespace TestXml.Api.Controllers
                 .SetAbsoluteExpiration(TimeSpan.FromSeconds(_cachedHitLifeTime)); 
 
             await _cache.SetAsync(jsonKey, responseBytes, options);
-            return Ok(result);//TODO
+            return Ok(adaptResponseModel);
         }
     }
 }

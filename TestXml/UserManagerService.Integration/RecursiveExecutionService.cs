@@ -12,7 +12,7 @@ namespace UserManagerService.Integration
     {
         private readonly ILogger<RecursiveExecutionService> _logger;
         private readonly ServiceOption _serviceOption;
-        private const string apiUrl = "https://localhost:44364/api/public/user";
+        private const string apiUrl = "https://localhost:44364/public";
 
         public RecursiveExecutionService(ILogger<RecursiveExecutionService> logger, ServiceOption serviceOption)
         {
