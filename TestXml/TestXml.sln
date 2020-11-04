@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestXml.Abstract", "TestXml
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestXml.Api", "TestXml.Api\TestXml.Api.csproj", "{C1BB0A82-0827-4B01-BD9E-140638EA4F7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagerService", "UserManagerService\UserManagerService.csproj", "{16ABDBE4-74DB-421D-BA73-7F2BC3D1DCC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagerService.Integration", "UserManagerService.Integration\UserManagerService.Integration.csproj", "{4DF3A341-04E8-4FBD-8A71-9AD499C9E024}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,14 @@ Global
 		{C1BB0A82-0827-4B01-BD9E-140638EA4F7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1BB0A82-0827-4B01-BD9E-140638EA4F7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1BB0A82-0827-4B01-BD9E-140638EA4F7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16ABDBE4-74DB-421D-BA73-7F2BC3D1DCC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16ABDBE4-74DB-421D-BA73-7F2BC3D1DCC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16ABDBE4-74DB-421D-BA73-7F2BC3D1DCC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16ABDBE4-74DB-421D-BA73-7F2BC3D1DCC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DF3A341-04E8-4FBD-8A71-9AD499C9E024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DF3A341-04E8-4FBD-8A71-9AD499C9E024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DF3A341-04E8-4FBD-8A71-9AD499C9E024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DF3A341-04E8-4FBD-8A71-9AD499C9E024}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
