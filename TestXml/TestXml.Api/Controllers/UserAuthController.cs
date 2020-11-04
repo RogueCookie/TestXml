@@ -50,7 +50,7 @@ namespace TestXml.Api.Controllers
             var adaptModel = model.AdaptRequestToModel();
 
             var result = await _infoService.CreateUser(adaptModel); 
-            if (result == null) NotFound();
+            if (result == null) NotFound();//TODO
 
             return Ok(result);
         }

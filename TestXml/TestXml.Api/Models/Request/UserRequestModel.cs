@@ -9,7 +9,7 @@ namespace TestXml.Api.Models.Request
         /// <summary>
         /// User Id
         /// </summary>
-        [Range(1,Int32.MaxValue)]
+        //[Range(1,Int32.MaxValue)]
         public int UserId { get; set; }
 
         /// <summary>
