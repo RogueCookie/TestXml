@@ -38,14 +38,13 @@ namespace TestXml.Api.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("GetUsers")] //TODO user info need to replace
-        [ProducesResponseType(typeof(UserResponseModel), (int)HttpStatusCode.OK)]// TODO list
-        public async Task<ActionResult<UserResponseModel>> GetUsers(UserRequestModel model) //TODO
+        [HttpGet("GetUsers")] //TODO user info need to replace
+        [ProducesResponseType(typeof(UserInfo), (int)HttpStatusCode.OK)]// TODO list
+        public async Task<ActionResult<UserInfo>> GetUsers() 
         {
-            if (model == null) throw new ArgumentNullException(nameof(model));
 
             // key by which asking cash
-            var jsonKey = JsonConvert.SerializeObject(model); 
+            var jsonKey = "allUsers"; 
             
             // check is this record already in a cash
             var resultCash = await _cache.GetAsync(jsonKey); 
@@ -56,12 +55,12 @@ namespace TestXml.Api.Controllers
                 if (cachedResultByte != null)
                 {
                     var cachedResultJson = Encoding.UTF8.GetString(cachedResultByte);
-                    var cachedResult = JsonConvert.DeserializeObject<UserInfo>(cachedResultJson);
+                    var cachedResult = JsonConvert.DeserializeObject<List<UserInfo>>(cachedResultJson);
                     return Ok(cachedResult);
                 }
             }
-
-            var result = await _infoService.CreateUser(model.AdaptRequestToModel());
+            
+            var result = await _infoService.GetUsers();
             if (result == null) NotFound();
 
             var responseJson = JsonConvert.SerializeObject(result);
@@ -72,8 +71,7 @@ namespace TestXml.Api.Controllers
                 .SetAbsoluteExpiration(TimeSpan.FromSeconds(_cachedHitLifeTime)); 
 
             await _cache.SetAsync(jsonKey, responseBytes, options);
-
-            return Ok(result);
+            return Ok(result);//TODO
         }
     }
 }
