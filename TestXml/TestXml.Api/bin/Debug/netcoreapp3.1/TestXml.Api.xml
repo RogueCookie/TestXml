@@ -23,7 +23,18 @@
             </summary>
             <returns>Message weather or not user was deleted in Json format</returns>
         </member>
+        <member name="F:TestXml.Api.Controllers.PublicController.JsonKey">
+            <summary>
+            key by which asking cash
+            </summary>
+        </member>
         <member name="M:TestXml.Api.Controllers.PublicController.GetUsers">
+            <summary>
+            Return information about users
+            </summary>
+            <returns>List of exist users</returns>
+        </member>
+        <member name="M:TestXml.Api.Controllers.PublicController.UserInfo(System.Int32)">
             <summary>
             Return information about user as html page
             </summary>

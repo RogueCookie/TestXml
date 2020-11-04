@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;
@@ -7,14 +8,10 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using TestXml.Abstract;
-using TestXml.Abstract.Models;
 using TestXml.Abstract.Models.Options;
 using TestXml.Api.Extension;
-using TestXml.Api.Models.Request;
 using TestXml.Api.Models.Response;
-using TestXml.Data.Extension;
 
 namespace TestXml.Api.Controllers
 {
@@ -27,6 +24,11 @@ namespace TestXml.Api.Controllers
         private readonly IDistributedCache _cache;
         private readonly int _cachedHitLifeTime;
 
+        /// <summary>
+        /// key by which asking cash
+        /// </summary>
+        private const string JsonKey = "allUsers";
+
         public PublicController(IUserInfoService infoService, IDistributedCache cache, AppOptions options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
@@ -36,30 +38,28 @@ namespace TestXml.Api.Controllers
         }
 
         /// <summary>
-        /// Return information about user as html page
+        /// Return information about users
         /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetUsers")] 
+        /// <returns>List of exist users</returns>
+        [HttpGet("GetUsers")]
         [ProducesResponseType(typeof(List<UserResponseModel>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<List<UserResponseModel>>> GetUsers() 
+        public async Task<ActionResult<List<UserResponseModel>>> GetUsers()
         {
-            // key by which asking cash
-            var jsonKey = "allUsers"; 
-            
             // check is this record already in a cash
-            var resultCash = await _cache.GetAsync(jsonKey); 
+            var resultCash = await _cache.GetAsync(JsonKey);
 
             if (resultCash != null)
             {
-                var cachedResultByte = await _cache.GetAsync(jsonKey);
+                var cachedResultByte = await _cache.GetAsync(JsonKey);
                 if (cachedResultByte != null)
                 {
                     var cachedResultJson = Encoding.UTF8.GetString(cachedResultByte);
                     var cachedResult = JsonConvert.DeserializeObject<List<UserResponseModel>>(cachedResultJson);
+
                     return Ok(cachedResult);
                 }
             }
-            
+
             var result = await _infoService.GetUsers();
             var adaptResponseModel = result.Select(x => x.AdaptModelToResponse());
 
@@ -68,10 +68,55 @@ namespace TestXml.Api.Controllers
 
             // assign how long we will be leave this cash 
             var options = new DistributedCacheEntryOptions()
-                .SetAbsoluteExpiration(TimeSpan.FromSeconds(_cachedHitLifeTime)); 
+                .SetAbsoluteExpiration(TimeSpan.FromSeconds(_cachedHitLifeTime));
 
-            await _cache.SetAsync(jsonKey, responseBytes, options);
+            await _cache.SetAsync(JsonKey, responseBytes, options);
             return Ok(adaptResponseModel);
+        }
+
+        /// <summary>
+        /// Return information about user as html page
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet()]
+        [ProducesResponseType(typeof(UserResponseModel), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<UserResponseModel>> UserInfo([FromQuery] int id)
+        {
+           // check is this record already in a cash
+            var resultCash = await _cache.GetAsync(JsonKey);
+            var user = new UserResponseModel();
+
+            if (resultCash != null)
+            {
+                var cachedResultByte = await _cache.GetAsync(JsonKey);
+                if (cachedResultByte != null)
+                {
+                    var cachedResultJson = Encoding.UTF8.GetString(cachedResultByte);
+                    var cachedResult = JsonConvert.DeserializeObject<List<UserResponseModel>>(cachedResultJson);
+
+                    user = cachedResult.FirstOrDefault(x => x.UserId == id);
+
+                    if (user == null) return null; //TODO
+
+                    return Ok(user);
+                }
+            }
+
+            var result = await _infoService.GetUsers();
+            var adaptResponseModel = result.Select(x => x.AdaptModelToResponse());
+
+            var responseJson = JsonConvert.SerializeObject(adaptResponseModel);
+            var responseBytes = Encoding.UTF8.GetBytes(responseJson);
+
+            // assign how long we will be leave this cash 
+            var options = new DistributedCacheEntryOptions()
+                .SetAbsoluteExpiration(TimeSpan.FromSeconds(_cachedHitLifeTime));
+
+            await _cache.SetAsync(JsonKey, responseBytes, options);
+
+            user = adaptResponseModel.FirstOrDefault(x => x.UserId == id);
+
+            return Ok(user);
         }
     }
 }
