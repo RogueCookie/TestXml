@@ -1,4 +1,6 @@
-﻿using TestXml.Abstract.Enums;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using TestXml.Abstract.Enums;
 
 namespace TestXml.Api.Models.Request
 {
@@ -7,6 +9,7 @@ namespace TestXml.Api.Models.Request
         /// <summary>
         /// User Id
         /// </summary>
+        [Range(1,Int32.MaxValue)]
         public int UserId { get; set; }
 
         /// <summary>

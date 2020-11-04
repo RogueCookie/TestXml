@@ -4,6 +4,69 @@
         <name>TestXml.Abstract</name>
     </assembly>
     <members>
+        <member name="T:TestXml.Abstract.Enums.UserStatus">
+            <summary>
+            All possible statuses for user
+            </summary>
+        </member>
+        <member name="F:TestXml.Abstract.Enums.UserStatus.New">
+            <summary>
+            New user
+            </summary>
+        </member>
+        <member name="F:TestXml.Abstract.Enums.UserStatus.Active">
+            <summary>
+            User is active
+            </summary>
+        </member>
+        <member name="F:TestXml.Abstract.Enums.UserStatus.Blocked">
+            <summary>
+            User currently blocked
+            </summary>
+        </member>
+        <member name="F:TestXml.Abstract.Enums.UserStatus.Deleted">
+            <summary>
+            User was marked as deleted
+            </summary>
+        </member>
+        <member name="T:TestXml.Abstract.IUserInfoService">
+            <summary>
+            Main manipulation with User 
+            </summary>
+        </member>
+        <member name="M:TestXml.Abstract.IUserInfoService.CreateUser(TestXml.Abstract.Models.UserInfo)">
+            <summary>
+            Add new user
+            </summary>
+            <param name="model">New user model</param>
+            <returns>User model which was added</returns>
+        </member>
+        <member name="M:TestXml.Abstract.IUserInfoService.GetUsers">
+            <summary>
+            Get all information about user
+            </summary>
+            <returns>List of exist users</returns>
+        </member>
+        <member name="M:TestXml.Abstract.IUserInfoService.Authenticate(System.String,System.String)">
+            <summary>
+            Used for base authentication
+            </summary>
+        </member>
+        <member name="M:TestXml.Abstract.IUserInfoService.RemoveUser(System.Int32)">
+            <summary>
+            Remove user by Id
+            </summary>
+            <param name="userId">User id</param>
+            <returns>Model with updated status</returns>
+        </member>
+        <member name="M:TestXml.Abstract.IUserInfoService.SetStatus(System.Int32,System.String)">
+            <summary>
+            Change user status
+            </summary>
+            <param name="userId">Id of user for updates</param>
+            <param name="status">New status which need to assign for user</param>
+            <returns>Updated user model</returns>
+        </member>
         <member name="T:TestXml.Abstract.Models.Options.AppOptions">
             <summary>
             TestXml configuration
@@ -32,6 +95,11 @@
         <member name="P:TestXml.Abstract.Models.UserInfo.UserStatus">
             <summary>
             Hold current user status
+            </summary>
+        </member>
+        <member name="P:TestXml.Abstract.Models.UserInfo.Password">
+            <summary>
+            Password for Authorize user
             </summary>
         </member>
     </members>

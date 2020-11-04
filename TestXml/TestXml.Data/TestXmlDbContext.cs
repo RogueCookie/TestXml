@@ -1,52 +1,38 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using MySql.Data.MySqlClient;
 using TestXml.Abstract.Enums;
 using TestXml.Abstract.Models.Options;
 using TestXml.Data.Entities;
 
 namespace TestXml.Data
 {
-    public class TestXmlDbContext :  DbContext/*, IDataAccess*/
+    public class TestXmlDbContext :  DbContext
     {
-        private readonly MySqlConnection _connection;
+        public TestXmlDbContext(DbContextOptions<TestXmlDbContext> option) : base(option)
+        {
+            Database.EnsureCreated();
+        }
 
         public DbSet<UserInfoEntity> Users { get; set; }
 
-        public TestXmlDbContext(DbContextOptions<TestXmlDbContext> options/*, AppOptions appOptions*/) //TODO
-            : base(options)
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            ///_connection =new MySqlConnection(appOptions.DataBaseConnectionString);
-            LoadDefaultUsers();
+            modelBuilder.Entity<UserInfoEntity>().ToTable("Users").HasKey(x => x.UserId);
+            var users = new List<UserInfoEntity>()
+            {
+                new UserInfoEntity() {UserId = 1, UserName = "tom@gmail.com", UserStatus = UserStatus.Active},
+                new UserInfoEntity() {UserId = 2, UserName = "alice@yahoo.com", UserStatus = UserStatus.Blocked},
+                new UserInfoEntity() {UserId = 3, UserName = "sam@online.com", UserStatus = UserStatus.Deleted},
+                new UserInfoEntity() {UserId = 4, UserName = "val@online.com", UserStatus = UserStatus.New}
+            };
+            modelBuilder.Entity<UserInfoEntity>().HasData(users);
+            base.OnModelCreating(modelBuilder);
         }
 
-        public List<UserInfoEntity> GetUsers() => Users.Local.ToList();
-
-        private void LoadDefaultUsers()
-        {
-            Users.Add(new UserInfoEntity() {UserId = 1, UserName = "tom@gmail.com", UserStatus = UserStatus.Active});
-            Users.Add(new UserInfoEntity() {UserId = 2, UserName = "alice@yahoo.com", UserStatus = UserStatus.Blocked});
-            Users.Add(new UserInfoEntity() {UserId = 3, UserName = "sam@online.com", UserStatus = UserStatus.Deleted});
-            Users.Add(new UserInfoEntity() {UserId = 4, UserName = "val@online.com", UserStatus = UserStatus.New});
-        }
-
-
-        //private readonly AppOptions _options;
-        //private readonly ILoggerFactory _loggerFactory;
-
-        //public TestXmlDbContext(AppOptions options, ILoggerFactory loggerFactory)
-        //{
-        //    _options = options ?? throw new ArgumentNullException(nameof(options));
-        //    _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
-
-        //    if (string.IsNullOrEmpty(options.DataBaseConnectionString)) throw new ArgumentException(nameof(options.DataBaseConnectionString));
-        //}
-
-
-
+        //public List<UserInfoEntity> GetUsers() => Users.Local.ToList();
     }
 }

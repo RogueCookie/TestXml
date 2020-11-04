@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using TestXml.Abstract;
 using TestXml.Abstract.Models;
+using TestXml.Api.Extension;
 using TestXml.Api.Models.Request;
 using TestXml.Api.Models.Response;
 
@@ -11,7 +13,8 @@ namespace TestXml.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
+    [AllowAnonymous]
     public class UserAuthController : ControllerBase
     {
         private readonly IUserInfoService _infoService;
@@ -38,32 +41,32 @@ namespace TestXml.Api.Controllers
         /// </summary>
         /// <param name="model">Information about new user</param>
         /// <returns></returns>
-       //[HttpPost("createuser.{format}"), FormatFilter]
-        [HttpPost("createuser.{format}"), FormatFilter]
-        [Produces("application/xml")]
-        [Consumes("application/xml")]
-        public async Task<ActionResult<UserResponseModel>> CreateUser([FromBody]UserRequestModel model)
+        [HttpPost("CreateUser")]
+        //[Produces("application/xml")]
+        [ProducesResponseType(typeof(UserResponseModel), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<UserRequestModel>> CreateUser([FromBody] UserRequestModel model)
         {
-            //if (model == null) throw new ArgumentNullException(nameof(model));
+            if (model == null) throw new ArgumentNullException(nameof(model));
+            var adaptModel = model.AdaptRequestToModel();
 
-            //var result = await _infoService.CreateUser(model.UserId, model.UserName, model.UserStatus); //TODO XML
-            //if (result == null) NotFound();
+            var result = await _infoService.CreateUser(adaptModel); 
+            if (result == null) NotFound();
 
-            //return Ok(result);
-            return Ok("Hello");
+            return Ok(result);
         }
 
         /// <summary>
         /// Remove particular user
         /// </summary>
         /// <returns>Message weather or not user was deleted in Json format</returns>
-        [HttpPost("removeuser.{format}"), FormatFilter]
-        [Produces("application/json")]
-        [Consumes("application/json")]
-        public async Task<ActionResult<UserResponseModel>> RemoveUser([FromBody] UserRequestModel model)
+        [HttpPost("RemoveUser")]
+        [ProducesResponseType(typeof(UserResponseModel), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<UserResponseModel>> RemoveUser(int userId)
         {
-            return Ok("Hello");
-            //throw new NotImplementedException();
+            var markUser = await _infoService.RemoveUser(userId);
+            if(markUser == null) return null;
+           
+            return Ok(markUser);
         }
 
         /// <summary>
@@ -71,7 +74,8 @@ namespace TestXml.Api.Controllers
         /// </summary>
         /// <returns>Message weather or not user was deleted in Json format</returns>
         [HttpPost("SetStatus")]
-        public async Task<ActionResult<UserResponseModel>> SetStatus(int id,  string newStatus) //TODo JsonObject from response
+        [ProducesResponseType(typeof(UserResponseModel), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<UserResponseModel>> SetStatus(int id, string newStatus) //TODo JsonObject from response
         {
             throw new NotImplementedException();
         }
