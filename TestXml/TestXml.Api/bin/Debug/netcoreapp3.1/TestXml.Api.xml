@@ -4,30 +4,40 @@
         <name>TestXml.Api</name>
     </assembly>
     <members>
-        <member name="M:TestXml.Api.Controllers.UserAuthController.CreateUser(TestXml.Api.Models.Request.UserRequestModel)">
+        <member name="M:TestXml.Api.Controllers.AuthController.CreateUser(TestXml.Api.Models.Request.UserRequestModel)">
             <summary>
             Create new user
             </summary>
             <param name="model">Information about new user</param>
             <returns></returns>
         </member>
-        <member name="M:TestXml.Api.Controllers.UserAuthController.RemoveUser(System.Int32)">
+        <member name="M:TestXml.Api.Controllers.AuthController.RemoveUser(System.Int32)">
             <summary>
             Remove particular user
             </summary>
             <returns>Message weather or not user was deleted in Json format</returns>
         </member>
-        <member name="M:TestXml.Api.Controllers.UserAuthController.SetStatus(System.Int32,System.String)">
+        <member name="M:TestXml.Api.Controllers.AuthController.SetStatus(TestXml.Api.Models.Request.UpdateStatusRequest)">
             <summary>
             Change status of user
             </summary>
             <returns>Message weather or not user was deleted in Json format</returns>
         </member>
-        <member name="M:TestXml.Api.Controllers.UserController.GetUsers">
+        <member name="F:TestXml.Api.Controllers.PublicController.JsonKey">
+            <summary>
+            key by which asking cash
+            </summary>
+        </member>
+        <member name="M:TestXml.Api.Controllers.PublicController.GetUsers">
+            <summary>
+            Return information about users
+            </summary>
+            <returns>List of exist users</returns>
+        </member>
+        <member name="M:TestXml.Api.Controllers.PublicController.UserInfo(System.Int32)">
             <summary>
             Return information about user as html page
             </summary>
-            <param name="model"></param>
             <returns></returns>
         </member>
         <member name="T:TestXml.Api.Extension.SwaggerExtension">
@@ -43,6 +53,16 @@
         <member name="M:TestXml.Api.Extension.SwaggerUiExtension.RegisterSwaggerUi(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
             Register swagger UI and Handler for exceptions for it
+            </summary>
+        </member>
+        <member name="P:TestXml.Api.Models.Request.UpdateStatusRequest.Id">
+            <summary>
+            User Id
+            </summary>
+        </member>
+        <member name="P:TestXml.Api.Models.Request.UpdateStatusRequest.NewStatus">
+            <summary>
+            Status which need to assign to particular user
             </summary>
         </member>
         <member name="P:TestXml.Api.Models.Request.UserRequestModel.UserId">

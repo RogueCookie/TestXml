@@ -89,7 +89,7 @@ namespace TestXml.Business
             if (existUser == null) return null; //TODO
             var currentStatus = existUser.UserStatus.ToString();
 
-            var newStatusIsEnum = Enum.IsDefined(typeof(UserStatus), status);//TODO check
+            var newStatusIsEnum = Enum.IsDefined(typeof(UserStatus), status);
             if (!newStatusIsEnum) return null;
 
             if (currentStatus == status) return existUser?.AdaptEntityToUserInfoModel();

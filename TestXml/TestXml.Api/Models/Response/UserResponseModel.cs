@@ -1,6 +1,4 @@
-﻿using TestXml.Abstract.Enums;
-
-namespace TestXml.Api.Models.Response
+﻿namespace TestXml.Api.Models.Response
 {
     public class UserResponseModel
     {
@@ -17,6 +15,6 @@ namespace TestXml.Api.Models.Response
         /// <summary>
         /// Hold current user status
         /// </summary>
-        public UserStatus UserStatus { get; set; } 
+        public string UserStatus { get; set; } 
     }
 }

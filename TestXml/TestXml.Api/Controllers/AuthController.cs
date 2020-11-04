@@ -11,15 +11,15 @@ using TestXml.Api.Models.Response;
 
 namespace TestXml.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    //[Authorize]
-    [AllowAnonymous]
-    public class UserAuthController : ControllerBase
+    [Authorize]
+    //[AllowAnonymous]
+    public class AuthController : ControllerBase
     {
         private readonly IUserInfoService _infoService;
 
-        public UserAuthController(IUserInfoService infoService)
+        public AuthController(IUserInfoService infoService)
         {
             _infoService = infoService ?? throw new ArgumentNullException(nameof(infoService));
         }
@@ -44,15 +44,15 @@ namespace TestXml.Api.Controllers
         [HttpPost("CreateUser")]
         //[Produces("application/xml")]
         [ProducesResponseType(typeof(UserResponseModel), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<UserRequestModel>> CreateUser([FromBody] UserRequestModel model)
+        public async Task<ActionResult<UserResponseModel>> CreateUser([FromBody] UserRequestModel model)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
             var adaptModel = model.AdaptRequestToModel();
 
             var result = await _infoService.CreateUser(adaptModel); 
             if (result == null) NotFound();//TODO
-
-            return Ok(result);
+            var adaptToResponse = result.AdaptModelToResponse();
+            return Ok(adaptToResponse);
         }
 
         /// <summary>
@@ -63,10 +63,10 @@ namespace TestXml.Api.Controllers
         [ProducesResponseType(typeof(UserResponseModel), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<UserResponseModel>> RemoveUser(int userId)
         {
-            var markUser = await _infoService.RemoveUser(userId);
-            if(markUser == null) return null;
-           
-            return Ok(markUser);
+            var markedUser = await _infoService.RemoveUser(userId);
+            if(markedUser == null) return null;
+            var adaptToResponse = markedUser.AdaptModelToResponse();
+            return Ok(adaptToResponse);
         }
 
         /// <summary>
@@ -75,9 +75,16 @@ namespace TestXml.Api.Controllers
         /// <returns>Message weather or not user was deleted in Json format</returns>
         [HttpPost("SetStatus")]
         [ProducesResponseType(typeof(UserResponseModel), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<UserResponseModel>> SetStatus(int id, string newStatus) //TODo JsonObject from response
+        [ProducesResponseType((int)HttpStatusCode.NotModified)]
+        public async Task<ActionResult<UserResponseModel>> SetStatus(UpdateStatusRequest updateStatusModel) 
         {
-            throw new NotImplementedException();
+            if (updateStatusModel == null) throw new ArgumentNullException(nameof(updateStatusModel));
+
+            var updatedUser = await _infoService.SetStatus(updateStatusModel.Id, updateStatusModel.NewStatus);
+            if (updatedUser == null) return StatusCode((int)HttpStatusCode.NotModified);
+            var  adaptToResponse = updatedUser.AdaptModelToResponse();
+
+            return adaptToResponse;
         }
     }
 }
