@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using TestXml.Abstract;
+using TestXml.Abstract.Models.Exceptions;
 using TestXml.Abstract.Models.Options;
 using TestXml.Api.Extension;
 using TestXml.Api.Models.Response;
@@ -96,7 +97,7 @@ namespace TestXml.Api.Controllers
 
                     user = cachedResult.FirstOrDefault(x => x.UserId == id);
 
-                    if (user == null) return null; //TODO
+                    if (user == null) throw new XmlExceptionError2($"User with id {id} does not exist");
 
                     return Ok(user);
                 }
@@ -115,6 +116,7 @@ namespace TestXml.Api.Controllers
             await _cache.SetAsync(JsonKey, responseBytes, options);
 
             user = adaptResponseModel.FirstOrDefault(x => x.UserId == id);
+            if (user == null) throw new XmlExceptionError2($"User with id {id} does not exist");
 
             return Ok(user);
         }

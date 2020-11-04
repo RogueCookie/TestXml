@@ -64,7 +64,6 @@ namespace TestXml.Api.Controllers
         public async Task<ActionResult<UserResponseModel>> RemoveUser(int userId)
         {
             var markedUser = await _infoService.RemoveUser(userId);
-            if(markedUser == null) return null;
             var adaptToResponse = markedUser.AdaptModelToResponse();
             return Ok(adaptToResponse);
         }

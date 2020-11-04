@@ -67,6 +67,16 @@
             <param name="status">New status which need to assign for user</param>
             <returns>Updated user model</returns>
         </member>
+        <member name="T:TestXml.Abstract.Models.Exceptions.XmlExceptionError1">
+            <summary>
+            General model for passing additional message with errorId 1
+            </summary>
+        </member>
+        <member name="T:TestXml.Abstract.Models.Exceptions.XmlExceptionError2">
+            <summary>
+            General model for passing additional message with errorId 2
+            </summary>
+        </member>
         <member name="T:TestXml.Abstract.Models.Options.AppOptions">
             <summary>
             TestXml configuration

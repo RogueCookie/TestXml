@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Xml.Serialization;
 using TestXml.Abstract.Models;
 
 namespace TestXml.Api.Models.Response
@@ -17,5 +18,12 @@ namespace TestXml.Api.Models.Response
 
         [XmlElement("ErrorMsg")]
         public string ErrorMsg { get; set; }
+
+        public Response(bool result, Exception ex, int errorId)
+        {
+            IsSuccess = result;
+            ErrorMsg = ex?.Message;
+            ErrorId = errorId;
+        }
     }
 }
