@@ -9,7 +9,6 @@ namespace TestXml.Data.Entities
         /// <summary>
         /// User Id
         /// </summary>
-        [Key]
         public int UserId { get; set; }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using TestXml.Abstract;
 using TestXml.Abstract.Enums;
 using TestXml.Abstract.Models;
-using TestXml.Abstract.Models.Options;
 using TestXml.Data;
 using TestXml.Data.Entities;
+using TestXml.Data.Extension;
 
 namespace TestXml.Business
 {
@@ -16,46 +16,39 @@ namespace TestXml.Business
     {
         private readonly TestXmlDbContext _dbContext;
 
-        private readonly IMemoryCache _memoryCache;
-        private readonly AppOptions _options;
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<UserInfo> _users = new List<UserInfo> {new UserInfo() { UserId = 1, UserName = "Test", Password = "test" }};
+        private readonly List<UserInfo> _users = new List<UserInfo> {new UserInfo() { UserId = 1, UserName = "Test", Password = "test" }};
 
-        public UserInfoService(AppOptions options, TestXmlDbContext dbContext)
+        public UserInfoService(TestXmlDbContext dbContext)
         {
-            _dbContext = dbContext;
-             _options = options ?? throw new ArgumentNullException(nameof(options));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
-
-
-        //public void Initialize()
-        //{
-        //    if (!_dbContext.Users.Any())
-        //    {
-        //        _dbContext.Users.AddRange(
-        //            new UserInfoEntity() { UserId = 1, UserName = "tom@gmail.com", UserStatus = UserStatus.Active },
-        //            new UserInfoEntity() { UserId = 2, UserName = "alice@yahoo.com", UserStatus = UserStatus.Blocked },
-        //            new UserInfoEntity() { UserId = 3, UserName = "sam@online.com", UserStatus = UserStatus.Deleted },
-        //            new UserInfoEntity() { UserId = 3, UserName = "val@online.com", UserStatus = UserStatus.New }
-        //        );
-        //        _dbContext.SaveChanges();
-        //    }
-        //}
 
         /// <inheritdoc />
         public async Task<List<UserInfo>> GetUsers()
         {
-            var foo =  _dbContext.GetUsers();
+            var foo =  await _dbContext.Users.Where(x => x.UserStatus != UserStatus.Deleted).ToListAsync();
             var result = foo.Select(x => AdaptUser(x)).ToList();
-            var result2 = await Task.Run(() => result.WithoutPasswords().ToList());
+            //var result2 = await Task.Run(() => result.WithoutPasswords().ToList());
             return result;
         }
 
 
         /// <inheritdoc />
-        public Task<UserInfo> CreateUser(int userId, string userName, UserStatus status)
+        public async Task<UserInfo> CreateUser(UserInfo model)
         {
-            throw new System.NotImplementedException();
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
+            var existUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserId == model.UserId);
+            if (existUser != null) return null; //TODO error model
+
+            var modelForAdd = model.AdaptUserToEntity();
+            await _dbContext.Users.AddAsync(modelForAdd);
+            await _dbContext.SaveChangesAsync();
+
+            var result =  await _dbContext.Users.FirstOrDefaultAsync(x => x.UserId == model.UserId);
+           
+            return result?.AdaptEntityToUserInfoModel();
         }
 
         /// <inheritdoc />
@@ -72,6 +65,44 @@ namespace TestXml.Business
             return user.WithoutPassword();
         }
 
+        /// <inheritdoc />
+        public async Task<UserInfo> RemoveUser(int userId)
+        {
+            var existUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserId == userId);
+            if (existUser == null) return null;
+
+            existUser.UserStatus = UserStatus.Deleted;
+
+            _dbContext.Users.Update(existUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserId == userId);
+            return result?.AdaptEntityToUserInfoModel();
+        }
+
+        /// <inheritdoc />
+        public async Task<UserInfo> SetStatus(int userId, string status)
+        {
+            if (status == null) throw new ArgumentNullException(nameof(status));
+
+            var existUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserId == userId);
+            if (existUser == null) return null; //TODO
+            var currentStatus = existUser.UserStatus.ToString();
+
+            var newStatusIsEnum = Enum.IsDefined(typeof(UserStatus), status);//TODO check
+            if (!newStatusIsEnum) return null;
+
+            if (currentStatus == status) return existUser?.AdaptEntityToUserInfoModel();
+
+            var newStatus = (UserStatus)Enum.Parse(typeof(UserStatus), status);
+            existUser.UserStatus = newStatus;
+
+            _dbContext.Users.Update(existUser);
+            await _dbContext.SaveChangesAsync();
+
+            var updatedUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserId == userId);
+            return updatedUser?.AdaptEntityToUserInfoModel();
+        }
 
         private UserInfo AdaptUser(UserInfoEntity userInfoEntity)
         {

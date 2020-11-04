@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Magic", "Magic", "{79889577-2AF9-4DC4-BECF-C3C15597B121}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{79889577-2AF9-4DC4-BECF-C3C15597B121}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B236BBB5-8005-4796-9602-794351CC27C8}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestXml.Data", "TestXml.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestXml.Abstract", "TestXml.Abstract\TestXml.Abstract.csproj", "{554B3D53-A75B-4BA0-AD8D-BF228ED8A0B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestXml.Api", "TestXml.Api\TestXml.Api.csproj", "{C1BB0A82-0827-4B01-BD9E-140638EA4F7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestXml.Api", "TestXml.Api\TestXml.Api.csproj", "{C1BB0A82-0827-4B01-BD9E-140638EA4F7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

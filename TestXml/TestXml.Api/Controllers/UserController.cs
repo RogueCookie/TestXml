@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using TestXml.Abstract;
 using TestXml.Abstract.Models;
 using TestXml.Abstract.Models.Options;
+using TestXml.Api.Extension;
 using TestXml.Api.Models.Request;
 using TestXml.Api.Models.Response;
 
@@ -60,7 +61,7 @@ namespace TestXml.Api.Controllers
                 }
             }
 
-            var result = await _infoService.CreateUser(model.UserId, model.UserName, model.UserStatus);
+            var result = await _infoService.CreateUser(model.AdaptRequestToModel());
             if (result == null) NotFound();
 
             var responseJson = JsonConvert.SerializeObject(result);
