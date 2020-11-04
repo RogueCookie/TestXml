@@ -55,6 +55,7 @@ namespace UserManagerService.Integration
             try
             {
                 var response = (HttpWebResponse)request.GetResponse();
+                await Task.FromResult(response);
                 _logger.LogDebug($"Update executed at {DateTime.Now}");
             }
             catch (Exception exception)
