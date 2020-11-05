@@ -73,17 +73,17 @@ namespace TestXml.Api.Controllers
         /// </summary>
         /// <returns>Message weather or not user was deleted in Json format</returns>
         [HttpPost("SetStatus")]
+        [Consumes("application/x-www-form-urlencoded")]
         [ProducesResponseType(typeof(UserResponseModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotModified)]
-        public async Task<ActionResult<UserResponseModel>> SetStatus(UpdateStatusRequest updateStatusModel) 
+        public async Task<IActionResult> SetStatus([FromForm] UpdateStatusRequest updateStatusModel) 
         {
             if (updateStatusModel == null) throw new ArgumentNullException(nameof(updateStatusModel));
-
             var updatedUser = await _infoService.SetStatus(updateStatusModel.Id, updateStatusModel.NewStatus);
             if (updatedUser == null) return StatusCode((int)HttpStatusCode.NotModified);
             var  adaptToResponse = updatedUser.AdaptModelToResponse();
 
-            return adaptToResponse;
+            return Ok(new { Consumes = "application/x-www-form-urlencoded", Values = adaptToResponse });
         }
     }
 }
